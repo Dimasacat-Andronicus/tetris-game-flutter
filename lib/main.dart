@@ -49,7 +49,7 @@ class _TetrisGameState extends State<TetrisGame> {
   static const int columns = 10;
   List<List<Color?>> grid = List.generate(
     rows,
-        (_) => List.generate(columns, (_) => null),
+    (_) => List.generate(columns, (_) => null),
   );
 
   Timer? gameTimer;
@@ -65,48 +65,54 @@ class _TetrisGameState extends State<TetrisGame> {
   final tetrominoes = [
     // I shape
     [
-      [1, 1, 1, 1]
+      [1, 1, 1, 1],
     ],
+
     // O shape
     [
       [1, 1],
-      [1, 1]
+      [1, 1],
     ],
+
     // T shape
     [
       [0, 1, 0],
-      [1, 1, 1]
+      [1, 1, 1],
     ],
+
     // S shape
     [
       [0, 1, 1],
-      [1, 1, 0]
+      [1, 1, 0],
     ],
+
     // Z shape
     [
       [1, 1, 0],
-      [0, 1, 1]
+      [0, 1, 1],
     ],
+
     // J shape
     [
       [1, 0, 0],
-      [1, 1, 1]
+      [1, 1, 1],
     ],
+
     // L shape
     [
       [0, 0, 1],
-      [1, 1, 1]
+      [1, 1, 1],
     ],
   ];
 
   final tetrominoColors = [
-    Colors.cyan,    // I shape
-    Colors.yellow,  // O shape
-    Colors.purple,  // T shape
-    Colors.green,   // S shape
-    Colors.red,     // Z shape
-    Colors.blue,    // J shape
-    Colors.orange,  // L shape
+    Colors.cyan, // I shape
+    Colors.yellow, // O shape
+    Colors.purple, // T shape
+    Colors.green, // S shape
+    Colors.red, // Z shape
+    Colors.blue, // J shape
+    Colors.orange, // L shape
   ];
 
   Color currentColor = Colors.blue;
@@ -119,10 +125,7 @@ class _TetrisGameState extends State<TetrisGame> {
 
   void startGame() {
     setState(() {
-      grid = List.generate(
-        rows,
-            (_) => List.generate(columns, (_) => null),
-      );
+      grid = List.generate(rows, (_) => List.generate(columns, (_) => null));
       score = 0;
       isGameOver = false;
       isGameStarted = true;
@@ -248,7 +251,7 @@ class _TetrisGameState extends State<TetrisGame> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const TetrisGame()),
-                      (route) => false, // Remove all previous routes
+                  (route) => false, // Remove all previous routes
                 );
               },
               child: const Text('Quit'),
@@ -270,9 +273,9 @@ class _TetrisGameState extends State<TetrisGame> {
   void rotateTetromino() {
     final rotated = List.generate(
       currentTetromino[0].length,
-          (i) => List.generate(
+      (i) => List.generate(
         currentTetromino.length,
-            (j) => currentTetromino[currentTetromino.length - j - 1][i],
+        (j) => currentTetromino[currentTetromino.length - j - 1][i],
       ),
     );
 
@@ -353,14 +356,15 @@ class _TetrisGameState extends State<TetrisGame> {
       appBar: AppBar(
         title: const Text('Tetris Game'),
         centerTitle: true,
-        actions: isGameStarted && !isGameOver
-            ? [
-          IconButton(
-            onPressed: pauseGame,
-            icon: const Icon(Icons.pause),
-          ),
-        ]
-            : null,
+        actions:
+            isGameStarted && !isGameOver
+                ? [
+                  IconButton(
+                    onPressed: pauseGame,
+                    icon: const Icon(Icons.pause),
+                  ),
+                ]
+                : null,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -375,7 +379,10 @@ class _TetrisGameState extends State<TetrisGame> {
                       children: [
                         const Text(
                           'Game Over',
-                          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 10),
                         Text(
@@ -384,7 +391,10 @@ class _TetrisGameState extends State<TetrisGame> {
                         ),
                         Text(
                           'High Score: $highScore',
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
@@ -402,21 +412,26 @@ class _TetrisGameState extends State<TetrisGame> {
                 builder: (context, constraints) {
                   // Calculate the available height for the grid
                   final availableHeight = constraints.maxHeight;
-                  final buttonHeight = 100.0; // Approximate height of the buttons
+                  final buttonHeight =
+                      100.0; // Approximate height of the buttons
                   final gridHeight = availableHeight - buttonHeight;
 
                   // Calculate the size of each cell based on the grid height and number of rows
                   final cellSize = gridHeight / rows;
 
                   return Padding(
-                    padding: const EdgeInsets.only(top: 50.0), // Adjust the top padding to bring the grid down
+                    padding: const EdgeInsets.only(top: 50.0),
+                    // Adjust the top padding to bring the grid down
                     child: SizedBox(
                       height: gridHeight,
                       child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(), // Disable scrolling
+                        physics: const NeverScrollableScrollPhysics(),
+                        // Disable scrolling
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: columns,
-                          childAspectRatio: constraints.maxWidth / (cellSize * columns), // Adjust aspect ratio
+                          childAspectRatio:
+                              constraints.maxWidth /
+                              (cellSize * columns), // Adjust aspect ratio
                         ),
                         itemCount: rows * columns,
                         itemBuilder: (context, index) {
@@ -426,8 +441,11 @@ class _TetrisGameState extends State<TetrisGame> {
                           if (row >= currentRow &&
                               row < currentRow + currentTetromino.length &&
                               column >= currentColumn &&
-                              column < currentColumn + currentTetromino[0].length &&
-                              currentTetromino[row - currentRow][column - currentColumn] == 1) {
+                              column <
+                                  currentColumn + currentTetromino[0].length &&
+                              currentTetromino[row - currentRow][column -
+                                      currentColumn] ==
+                                  1) {
                             color = currentColor;
                           }
                           return Container(
@@ -448,7 +466,10 @@ class _TetrisGameState extends State<TetrisGame> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Score: $score', style: const TextStyle(fontSize: 24)),
-                    Text('High Score: $highScore', style: const TextStyle(fontSize: 24)),
+                    Text(
+                      'High Score: $highScore',
+                      style: const TextStyle(fontSize: 24),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -476,12 +497,15 @@ class _TetrisGameState extends State<TetrisGame> {
                       child: const SizedBox(
                         width: 48.0, // Increased tap area width
                         height: 48.0, // Increased tap area height
-                        child: Icon(Icons.arrow_downward, size: 36.0), // Increased icon size
+                        child: Icon(
+                          Icons.arrow_downward,
+                          size: 36.0,
+                        ), // Increased icon size
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 40)
+                SizedBox(height: 40),
               ],
             ),
         ],
