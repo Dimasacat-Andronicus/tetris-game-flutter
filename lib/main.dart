@@ -385,7 +385,7 @@ class _TetrisGameState extends State<TetrisGame> {
                   const SizedBox(height: 60),
                   ElevatedButton(
                     onPressed: startGame,
-                    child: const Text('Play again'),
+                    child: const Text('Play'),
                   ),
                 ],
               ),
