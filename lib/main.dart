@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -396,9 +397,16 @@ class _TetrisGameState extends State<TetrisGame> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        const SizedBox(height: 20),
                       ],
                     ),
-                  const SizedBox(height: 20),
+                  if (!isGameStarted)
+                    Lottie.asset(
+                      'assets/tetris_animation_two.json',
+                      width: 400,
+                      height: 400,
+                    ),
+                  const SizedBox(height: 60),
                   ElevatedButton(
                     onPressed: startGame,
                     child: const Text('Start Game'),
