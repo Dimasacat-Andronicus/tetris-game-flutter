@@ -370,7 +370,27 @@ class _TetrisGameState extends State<TetrisGame> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (!isGameStarted || isGameOver)
+          if (!isGameStarted && !isGameOver)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset(
+                      'assets/tetris_animation_two.json',
+                      width: 400,
+                      height: 400,
+                    ),
+                  ),
+                  const SizedBox(height: 60),
+                  ElevatedButton(
+                    onPressed: startGame,
+                    child: const Text('Play again'),
+                  ),
+                ],
+              ),
+            )
+          else if (!isGameStarted && isGameOver)
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -400,16 +420,9 @@ class _TetrisGameState extends State<TetrisGame> {
                         const SizedBox(height: 20),
                       ],
                     ),
-                  if (!isGameStarted)
-                    Lottie.asset(
-                      'assets/tetris_animation_two.json',
-                      width: 400,
-                      height: 400,
-                    ),
-                  const SizedBox(height: 60),
                   ElevatedButton(
                     onPressed: startGame,
-                    child: const Text('Start Game'),
+                    child: const Text('Play again'),
                   ),
                 ],
               ),
