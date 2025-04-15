@@ -12,19 +12,47 @@ class TetrisGame extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        leading: BlocBuilder<TetrisCubit, TetrisState>(
+      leading: BlocBuilder<TetrisCubit, TetrisState>(
+    builder: (context, state) {
+      if (state.isGameStarted && !state.isGameOver) {
+        return IconButton(
+          onPressed: () => context.read<TetrisCubit>().pauseGame(context),
+          icon: const Icon(Icons.pause),
+          iconSize: 32.0,
+        );
+      }
+      return const SizedBox.shrink();
+    },
+    ),
+      actions: [
+        BlocBuilder<TetrisCubit, TetrisState>(
           builder: (context, state) {
-            if (state.isGameStarted && !state.isGameOver) {
-              return IconButton(
-                onPressed: () => context.read<TetrisCubit>().pauseGame(context),
-                icon: const Icon(Icons.pause),
-                iconSize: 32.0,
+            if (state.nextTetromino != null) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: state.nextTetromino!.map((row) {
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: row.map((cell) {
+                        return Container(
+                          width: 15,
+                          height: 15,
+                          margin: const EdgeInsets.all(1),
+                          color: cell == 1 ? state.nextColor : Colors.transparent,
+                        );
+                      }).toList(),
+                    );
+                  }).toList(),
+                ),
               );
             }
             return const SizedBox.shrink();
           },
         ),
-      ),
+      ],
+    ),
       body: BlocBuilder<TetrisCubit, TetrisState>(
         builder: (context, state) {
           if (!state.isGameStarted && !state.isGameOver) {
@@ -93,44 +121,41 @@ class TetrisGame extends StatelessWidget {
           } else {
             return Column(
               children: [
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final cellSize = constraints.maxHeight / TetrisCubit.rows;
-                      return GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: TetrisCubit.columns,
-                          childAspectRatio:
-                              constraints.maxWidth /
-                              (cellSize * TetrisCubit.columns),
-                        ),
-                        itemCount: TetrisCubit.rows * TetrisCubit.columns,
-                        itemBuilder: (context, index) {
-                          int row = index ~/ TetrisCubit.columns;
-                          int column = index % TetrisCubit.columns;
-                          Color? color = state.grid[row][column];
-                          if (row >= state.currentRow &&
-                              row <
-                                  state.currentRow +
-                                      state.currentTetromino.length &&
-                              column >= state.currentColumn &&
-                              column <
-                                  state.currentColumn +
-                                      state.currentTetromino[0].length &&
-                              state.currentTetromino[row -
-                                      state.currentRow][column -
-                                      state.currentColumn] ==
-                                  1) {
-                            color = state.currentColor;
-                          }
-                          return Container(
-                            margin: const EdgeInsets.all(1),
-                            color: color ?? Colors.deepPurple[200],
-                          );
-                        },
-                      );
-                    },
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(40.0), // Add padding around the grid
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final cellSize = constraints.maxHeight / TetrisCubit.rows;
+                        return GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: TetrisCubit.columns,
+                            childAspectRatio:
+                            constraints.maxWidth / (cellSize * TetrisCubit.columns),
+                          ),
+                          itemCount: TetrisCubit.rows * TetrisCubit.columns,
+                          itemBuilder: (context, index) {
+                            int row = index ~/ TetrisCubit.columns;
+                            int column = index % TetrisCubit.columns;
+                            Color? color = state.grid[row][column];
+                            if (row >= state.currentRow &&
+                                row < state.currentRow + state.currentTetromino.length &&
+                                column >= state.currentColumn &&
+                                column < state.currentColumn + state.currentTetromino[0].length &&
+                                state.currentTetromino[row - state.currentRow]
+                                [column - state.currentColumn] ==
+                                    1) {
+                              color = state.currentColor;
+                            }
+                            return Container(
+                              margin: const EdgeInsets.all(1),
+                              color: color ?? Colors.deepPurple[200],
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Row(
