@@ -10,23 +10,19 @@ class TetrisGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Tetris Game'),
-        centerTitle: true,
-        actions: [
-          BlocBuilder<TetrisCubit, TetrisState>(
-            builder: (context, state) {
-              if (state.isGameStarted && !state.isGameOver) {
-                return IconButton(
-                  onPressed:
-                      () => context.read<TetrisCubit>().pauseGame(context),
-                  icon: const Icon(Icons.pause),
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-        ],
+        leading: BlocBuilder<TetrisCubit, TetrisState>(
+          builder: (context, state) {
+            if (state.isGameStarted && !state.isGameOver) {
+              return IconButton(
+                onPressed: () => context.read<TetrisCubit>().pauseGame(context),
+                icon: const Icon(Icons.pause),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
       ),
       body: BlocBuilder<TetrisCubit, TetrisState>(
         builder: (context, state) {
@@ -34,17 +30,26 @@ class TetrisGame extends StatelessWidget {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(
-                    child: Lottie.asset(
-                      'assets/tetris_animation_two.json',
-                      width: 400,
-                      height: 400,
-                    ),
+                  Image.asset(
+                    'assets/tetris_plus.png',
+                    width: 175,
+                    height: 175,
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 60),
+                  Lottie.asset(
+                    'assets/tetris_animation_two.json',
+                    width: 275,
+                    height: 275,
+                  ),
+                  const SizedBox(height: 30),
                   ElevatedButton(
                     onPressed: () => context.read<TetrisCubit>().startGame(),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(150, 50),
+                      textStyle: const TextStyle(fontSize: 26),
+                    ),
                     child: const Text('Play'),
                   ),
                 ],
@@ -57,20 +62,28 @@ class TetrisGame extends StatelessWidget {
                 children: [
                   const Text(
                     'Game Over',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
                   Text(
                     'Your Score: ${state.score}',
-                    style: const TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: 24, color: Colors.white),
                   ),
                   Text(
                     'High Score: ${state.highScore}',
-                    style: const TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: 24, color: Colors.white),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 50),
                   ElevatedButton(
                     onPressed: () => context.read<TetrisCubit>().startGame(),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(150, 50),
+                      textStyle: const TextStyle(fontSize: 24),
+                    ),
                     child: const Text('Play Again'),
                   ),
                 ],
@@ -112,7 +125,7 @@ class TetrisGame extends StatelessWidget {
                           }
                           return Container(
                             margin: const EdgeInsets.all(1),
-                            color: color ?? Colors.grey[300],
+                            color: color ?? Colors.deepPurple[200],
                           );
                         },
                       );
@@ -124,11 +137,11 @@ class TetrisGame extends StatelessWidget {
                   children: [
                     Text(
                       'Score: ${state.score}',
-                      style: const TextStyle(fontSize: 24),
+                      style: const TextStyle(fontSize: 24, color: Colors.white),
                     ),
                     Text(
                       'High Score: ${state.highScore}',
-                      style: const TextStyle(fontSize: 24),
+                      style: const TextStyle(fontSize: 24, color: Colors.white),
                     ),
                   ],
                 ),
@@ -138,18 +151,18 @@ class TetrisGame extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () => context.read<TetrisCubit>().moveLeft(),
-                      icon: const Icon(Icons.arrow_left),
+                      icon: const Icon(Icons.arrow_left, color: Colors.white),
                       iconSize: 36.0,
                     ),
                     IconButton(
                       onPressed: () => context.read<TetrisCubit>().moveRight(),
-                      icon: const Icon(Icons.arrow_right),
+                      icon: const Icon(Icons.arrow_right, color: Colors.white),
                       iconSize: 36.0,
                     ),
                     IconButton(
                       onPressed:
                           () => context.read<TetrisCubit>().rotateTetromino(),
-                      icon: const Icon(Icons.rotate_right),
+                      icon: const Icon(Icons.rotate_right, color: Colors.white),
                       iconSize: 36.0,
                     ),
                     GestureDetector(
@@ -164,7 +177,11 @@ class TetrisGame extends StatelessWidget {
                       onTapUp:
                           (_) =>
                               context.read<TetrisCubit>().holdTimer?.cancel(),
-                      child: const Icon(Icons.arrow_downward, size: 36.0),
+                      child: const Icon(
+                        Icons.arrow_downward,
+                        size: 36.0,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
