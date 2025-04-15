@@ -67,6 +67,7 @@ class TetrisCubit extends Cubit<TetrisState> {
           isGameOver: false,
           isGameStarted: false,
           currentColor: Colors.blue,
+          showAnimation: false,
         ),
       ) {
     _loadHighScore();
@@ -102,7 +103,8 @@ class TetrisCubit extends Cubit<TetrisState> {
     final newTetromino = state.nextTetromino ?? tetrominoes[0];
     final newColor = state.nextColor ?? tetrominoColors[0];
 
-    final nextIndex = DateTime.now().millisecondsSinceEpoch % tetrominoes.length;
+    final nextIndex =
+        DateTime.now().millisecondsSinceEpoch % tetrominoes.length;
     final nextTetromino = tetrominoes[nextIndex];
     final nextColor = tetrominoColors[nextIndex];
 
@@ -122,6 +124,15 @@ class TetrisCubit extends Cubit<TetrisState> {
           nextColor: nextColor,
         ),
       );
+    }
+  }
+
+  void checkLinesDestroyed(int linesDestroyed) {
+    if (linesDestroyed == 3 || linesDestroyed == 4) {
+      emit(state.copyWith(showAnimation: true));
+      Future.delayed(const Duration(seconds: 2), () {
+        emit(state.copyWith(showAnimation: false));
+      });
     }
   }
 
@@ -153,9 +164,9 @@ class TetrisCubit extends Cubit<TetrisState> {
   void rotateTetromino() {
     final rotated = List.generate(
       state.currentTetromino[0].length,
-          (i) => List.generate(
+      (i) => List.generate(
         state.currentTetromino.length,
-            (j) => state.currentTetromino[state.currentTetromino.length - j - 1][i],
+        (j) => state.currentTetromino[state.currentTetromino.length - j - 1][i],
       ),
     );
 
@@ -173,11 +184,13 @@ class TetrisCubit extends Cubit<TetrisState> {
     }
 
     if (!checkCollision(newRow, newColumn, rotated)) {
-      emit(state.copyWith(
-        currentTetromino: rotated,
-        currentRow: newRow,
-        currentColumn: newColumn,
-      ));
+      emit(
+        state.copyWith(
+          currentTetromino: rotated,
+          currentRow: newRow,
+          currentColumn: newColumn,
+        ),
+      );
     }
   }
 
@@ -249,6 +262,8 @@ class TetrisCubit extends Cubit<TetrisState> {
       emit(state.copyWith(highScore: newScore));
       _saveHighScore();
     }
+
+    checkLinesDestroyed(linesCleared);
   }
 
   void gameOver() {
