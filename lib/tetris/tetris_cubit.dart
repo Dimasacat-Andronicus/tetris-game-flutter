@@ -45,13 +45,13 @@ class TetrisCubit extends Cubit<TetrisState> {
   ];
 
   final tetrominoColors = [
-    Colors.cyan,
-    Colors.yellow,
-    Colors.purple,
-    Colors.green,
-    Colors.red,
-    Colors.blue,
-    Colors.orange,
+    Colors.teal[300]!,
+    Colors.amber[300]!,
+    Colors.green[300]!,
+    Colors.cyan[300]!,
+    Colors.pink[300]!,
+    Colors.lime[300]!,
+    Colors.orange[300]!,
   ];
 
   TetrisCubit()
