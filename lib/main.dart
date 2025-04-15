@@ -15,22 +15,18 @@ class TetrisApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.teal,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.teal,
+        primaryColor: Colors.deepPurple[400],
+        scaffoldBackgroundColor: Colors.deepPurple[400],
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.deepPurple[400],
           foregroundColor: Colors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.teal,
-            foregroundColor: Colors.white,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.deepPurple[400],
             textStyle: const TextStyle(fontSize: 16),
           ),
-        ),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.black, fontSize: 18),
-          bodyMedium: TextStyle(color: Colors.black54, fontSize: 16),
         ),
       ),
       home: const TetrisGame(),
