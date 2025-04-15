@@ -18,6 +18,7 @@ class TetrisGame extends StatelessWidget {
               return IconButton(
                 onPressed: () => context.read<TetrisCubit>().pauseGame(context),
                 icon: const Icon(Icons.pause),
+                iconSize: 32.0,
               );
             }
             return const SizedBox.shrink();
