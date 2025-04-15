@@ -10,6 +10,7 @@ part 'tetris_state.dart';
 class TetrisCubit extends Cubit<TetrisState> {
   static const int rows = 20;
   static const int columns = 10;
+  bool isMovingDown = false;
 
   Timer? gameTimer;
   Timer? holdTimer;
@@ -119,11 +120,16 @@ class TetrisCubit extends Cubit<TetrisState> {
   }
 
   void moveDown() {
+    if (isMovingDown) return;
+    isMovingDown = true;
+
     if (!checkCollision(state.currentRow + 1, state.currentColumn)) {
       emit(state.copyWith(currentRow: state.currentRow + 1));
     } else {
       lockPiece();
     }
+
+    isMovingDown = false;
   }
 
   void moveLeft() {
@@ -141,21 +147,40 @@ class TetrisCubit extends Cubit<TetrisState> {
   void rotateTetromino() {
     final rotated = List.generate(
       state.currentTetromino[0].length,
-      (i) => List.generate(
+          (i) => List.generate(
         state.currentTetromino.length,
-        (j) => state.currentTetromino[state.currentTetromino.length - j - 1][i],
+            (j) => state.currentTetromino[state.currentTetromino.length - j - 1][i],
       ),
     );
 
-    if (!checkCollision(state.currentRow, state.currentColumn)) {
-      emit(state.copyWith(currentTetromino: rotated));
+    int newRow = state.currentRow;
+    int newColumn = state.currentColumn;
+
+    while (newColumn < 0) {
+      newColumn++;
+    }
+    while (newColumn + rotated[0].length > columns) {
+      newColumn--;
+    }
+    while (newRow + rotated.length > rows) {
+      newRow--;
+    }
+
+    if (!checkCollision(newRow, newColumn, rotated)) {
+      emit(state.copyWith(
+        currentTetromino: rotated,
+        currentRow: newRow,
+        currentColumn: newColumn,
+      ));
     }
   }
 
-  bool checkCollision(int newRow, int newColumn) {
-    for (int i = 0; i < state.currentTetromino.length; i++) {
-      for (int j = 0; j < state.currentTetromino[i].length; j++) {
-        if (state.currentTetromino[i][j] == 1) {
+  bool checkCollision(int newRow, int newColumn, [List<List<int>>? tetromino]) {
+    final piece = tetromino ?? state.currentTetromino;
+
+    for (int i = 0; i < piece.length; i++) {
+      for (int j = 0; j < piece[i].length; j++) {
+        if (piece[i][j] == 1) {
           int gridRow = newRow + i;
           int gridColumn = newColumn + j;
           if (gridRow >= rows ||
