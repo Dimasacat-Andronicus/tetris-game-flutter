@@ -10,6 +10,8 @@ class TetrisState {
   final bool isGameOver;
   final bool isGameStarted;
   final Color currentColor;
+  final List<List<int>>? nextTetromino;
+  final Color? nextColor;
 
   TetrisState({
     required this.grid,
@@ -21,6 +23,8 @@ class TetrisState {
     required this.isGameOver,
     required this.isGameStarted,
     required this.currentColor,
+    this.nextTetromino,
+    this.nextColor,
   });
 
   TetrisState copyWith({
@@ -33,6 +37,8 @@ class TetrisState {
     bool? isGameOver,
     bool? isGameStarted,
     Color? currentColor,
+    List<List<int>>? nextTetromino,
+    Color? nextColor,
   }) {
     return TetrisState(
       grid: grid ?? this.grid,
@@ -44,6 +50,8 @@ class TetrisState {
       isGameOver: isGameOver ?? this.isGameOver,
       isGameStarted: isGameStarted ?? this.isGameStarted,
       currentColor: currentColor ?? this.currentColor,
+      nextTetromino: nextTetromino ?? this.nextTetromino,
+      nextColor: nextColor ?? this.nextColor,
     );
   }
 }
