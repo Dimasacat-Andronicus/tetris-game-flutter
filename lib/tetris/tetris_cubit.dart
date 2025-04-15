@@ -7,7 +7,6 @@ import '../main.dart';
 
 part 'tetris_state.dart';
 
-
 class TetrisCubit extends Cubit<TetrisState> {
   static const int rows = 20;
   static const int columns = 10;
@@ -16,13 +15,33 @@ class TetrisCubit extends Cubit<TetrisState> {
   Timer? holdTimer;
 
   final tetrominoes = [
-    [[1, 1, 1, 1]], // I shape
-    [[1, 1], [1, 1]], // O shape
-    [[0, 1, 0], [1, 1, 1]], // T shape
-    [[0, 1, 1], [1, 1, 0]], // S shape
-    [[1, 1, 0], [0, 1, 1]], // Z shape
-    [[1, 0, 0], [1, 1, 1]], // J shape
-    [[0, 0, 1], [1, 1, 1]], // L shape
+    [
+      [1, 1, 1, 1],
+    ], // I shape
+    [
+      [1, 1],
+      [1, 1],
+    ], // O shape
+    [
+      [0, 1, 0],
+      [1, 1, 1],
+    ], // T shape
+    [
+      [0, 1, 1],
+      [1, 1, 0],
+    ], // S shape
+    [
+      [1, 1, 0],
+      [0, 1, 1],
+    ], // Z shape
+    [
+      [1, 0, 0],
+      [1, 1, 1],
+    ], // J shape
+    [
+      [0, 0, 1],
+      [1, 1, 1],
+    ], // L shape
   ];
 
   final tetrominoColors = [
@@ -36,17 +55,19 @@ class TetrisCubit extends Cubit<TetrisState> {
   ];
 
   TetrisCubit()
-      : super(TetrisState(
-    grid: List.generate(rows, (_) => List.generate(columns, (_) => null)),
-    currentTetromino: [],
-    currentRow: 0,
-    currentColumn: columns ~/ 2,
-    score: 0,
-    highScore: 0,
-    isGameOver: false,
-    isGameStarted: false,
-    currentColor: Colors.blue,
-  )) {
+    : super(
+        TetrisState(
+          grid: List.generate(rows, (_) => List.generate(columns, (_) => null)),
+          currentTetromino: [],
+          currentRow: 0,
+          currentColumn: columns ~/ 2,
+          score: 0,
+          highScore: 0,
+          isGameOver: false,
+          isGameStarted: false,
+          currentColor: Colors.blue,
+        ),
+      ) {
     _loadHighScore();
   }
 
@@ -61,12 +82,14 @@ class TetrisCubit extends Cubit<TetrisState> {
   }
 
   void startGame() {
-    emit(state.copyWith(
-      grid: List.generate(rows, (_) => List.generate(columns, (_) => null)),
-      score: 0,
-      isGameOver: false,
-      isGameStarted: true,
-    ));
+    emit(
+      state.copyWith(
+        grid: List.generate(rows, (_) => List.generate(columns, (_) => null)),
+        score: 0,
+        isGameOver: false,
+        isGameStarted: true,
+      ),
+    );
     holdTimer?.cancel();
     spawnTetromino();
     gameTimer = Timer.periodic(const Duration(milliseconds: 500), (_) {
@@ -84,12 +107,14 @@ class TetrisCubit extends Cubit<TetrisState> {
     if (checkCollision(newRow, newColumn)) {
       gameOver();
     } else {
-      emit(state.copyWith(
-        currentTetromino: newTetromino,
-        currentColor: newColor,
-        currentRow: newRow,
-        currentColumn: newColumn,
-      ));
+      emit(
+        state.copyWith(
+          currentTetromino: newTetromino,
+          currentColor: newColor,
+          currentRow: newRow,
+          currentColumn: newColumn,
+        ),
+      );
     }
   }
 
@@ -116,9 +141,9 @@ class TetrisCubit extends Cubit<TetrisState> {
   void rotateTetromino() {
     final rotated = List.generate(
       state.currentTetromino[0].length,
-          (i) => List.generate(
+      (i) => List.generate(
         state.currentTetromino.length,
-            (j) => state.currentTetromino[state.currentTetromino.length - j - 1][i],
+        (j) => state.currentTetromino[state.currentTetromino.length - j - 1][i],
       ),
     );
 
@@ -231,7 +256,7 @@ class TetrisCubit extends Cubit<TetrisState> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const TetrisApp()),
-                      (route) => false, // Remove all previous routes
+                  (route) => false, // Remove all previous routes
                 );
               },
               child: const Text('Quit'),
@@ -254,5 +279,4 @@ class TetrisCubit extends Cubit<TetrisState> {
     holdTimer?.cancel();
     return super.close();
   }
-
 }

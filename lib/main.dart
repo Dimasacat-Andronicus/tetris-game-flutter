@@ -4,12 +4,7 @@ import './tetris/tetris_cubit.dart';
 import './tetris/tetris_screen.dart';
 
 void main() {
-  runApp(
-    BlocProvider(
-        create: (_) => TetrisCubit(),
-        child: const TetrisApp()
-    )
-  );
+  runApp(BlocProvider(create: (_) => TetrisCubit(), child: const TetrisApp()));
 }
 
 class TetrisApp extends StatelessWidget {
