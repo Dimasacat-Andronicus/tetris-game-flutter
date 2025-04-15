@@ -99,9 +99,13 @@ class TetrisCubit extends Cubit<TetrisState> {
   }
 
   void spawnTetromino() {
-    final index = DateTime.now().millisecondsSinceEpoch % tetrominoes.length;
-    final newTetromino = tetrominoes[index];
-    final newColor = tetrominoColors[index];
+    final newTetromino = state.nextTetromino ?? tetrominoes[0];
+    final newColor = state.nextColor ?? tetrominoColors[0];
+
+    final nextIndex = DateTime.now().millisecondsSinceEpoch % tetrominoes.length;
+    final nextTetromino = tetrominoes[nextIndex];
+    final nextColor = tetrominoColors[nextIndex];
+
     final newRow = 0;
     final newColumn = columns ~/ 2 - newTetromino[0].length ~/ 2;
 
@@ -114,6 +118,8 @@ class TetrisCubit extends Cubit<TetrisState> {
           currentColor: newColor,
           currentRow: newRow,
           currentColumn: newColumn,
+          nextTetromino: nextTetromino,
+          nextColor: nextColor,
         ),
       );
     }
