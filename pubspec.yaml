@@ -67,6 +67,7 @@ flutter:
     - assets/tetris_animation_one.json
     - assets/tetris_animation_two.json
     - assets/tetris_plus.png
+    - assets/tetris_bg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
