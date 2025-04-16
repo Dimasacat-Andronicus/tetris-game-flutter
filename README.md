@@ -1,16 +1,22 @@
-# tetris_flutter_app
+<div align="center">
 
-The og tetris game is coming to your mobile device.
+<h1>Tetris Plus App</h1>
 
-## Getting Started
+### Explore the Android app on:
+[![Google Drive](https://img.shields.io/badge/google%20Drive-Visit-blue?style=for-the-badge&logo=googledrive)](addlinkhere) 
+</div>
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## About
+##### A Tetris game build on Flutter and Dart language.
+##### This app was made using BLoC state management.
+##### Dependencies: FLutter_bloc, shared_preferences, and lottie.
+-------------------------
+## Features
+##### Can see the next block to be deployed on the grid.
+##### Have left and right button for change position.
+##### Have rotate button for rotating the block.
+##### Have holding down button for moving down the block fast.
+##### Can pause, resume, and quit the game.
+------------------------
+## Needs to be fix
+##### Bug on holding down button. (Between Major and Minor)
