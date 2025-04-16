@@ -149,6 +149,11 @@ class TetrisCubit extends Cubit<TetrisState> {
     isMovingDown = false;
   }
 
+  void cancelHoldTimer() {
+    holdTimer?.cancel();
+    holdTimer = null;
+  }
+
   void moveLeft() {
     if (!checkCollision(state.currentRow, state.currentColumn - 1)) {
       emit(state.copyWith(currentColumn: state.currentColumn - 1));
