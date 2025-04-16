@@ -179,8 +179,22 @@ class TetrisGame extends StatelessWidget {
                                 return Container(
                                   margin: const EdgeInsets.all(2),
                                   decoration: BoxDecoration(
-                                      color: color ?? const Color.fromARGB(200, 255, 255, 255),
-                                      border: Border.all(color: const Color.fromARGB(128, 255, 255, 255)),
+                                    color:
+                                        color ??
+                                        const Color.fromARGB(
+                                          200,
+                                          255,
+                                          255,
+                                          255,
+                                        ),
+                                    border: Border.all(
+                                      color: const Color.fromARGB(
+                                        128,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
+                                    ),
                                   ),
                                 );
                               },
@@ -248,9 +262,11 @@ class TetrisGame extends StatelessWidget {
                         GestureDetector(
                           onTapDown: (_) {
                             context.read<TetrisCubit>().holdTimer?.cancel();
-                            context.read<TetrisCubit>().holdTimer = Timer.periodic(
+                            context
+                                .read<TetrisCubit>()
+                                .holdTimer = Timer.periodic(
                               const Duration(milliseconds: 100),
-                                  (_) => context.read<TetrisCubit>().moveDown(),
+                              (_) => context.read<TetrisCubit>().moveDown(),
                             );
                           },
                           onTapUp: (_) {

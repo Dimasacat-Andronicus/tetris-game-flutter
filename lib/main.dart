@@ -16,9 +16,7 @@ class TetrisApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.deepPurple[400],
-        appBarTheme: AppBarTheme(
-          foregroundColor: Colors.white,
-        ),
+        appBarTheme: AppBarTheme(foregroundColor: Colors.white),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
@@ -30,11 +28,13 @@ class TetrisApp extends StatelessWidget {
       home: Scaffold(
         body: Stack(
           children: [
-            Positioned.fill(child: Image.asset('assets/tetris_bg.png', fit: BoxFit.cover)),
+            Positioned.fill(
+              child: Image.asset('assets/tetris_bg.png', fit: BoxFit.cover),
+            ),
             const TetrisGame(),
           ],
         ),
-      )
+      ),
     );
   }
 }
