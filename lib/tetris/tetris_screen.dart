@@ -213,8 +213,10 @@ class TetrisGame extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                          onPressed:
-                              () => context.read<TetrisCubit>().moveLeft(),
+                          onPressed: () {
+                            context.read<TetrisCubit>().holdTimer?.cancel();
+                            context.read<TetrisCubit>().moveLeft();
+                          },
                           icon: const Icon(
                             Icons.arrow_left,
                             color: Colors.white,
@@ -222,8 +224,10 @@ class TetrisGame extends StatelessWidget {
                           iconSize: 36.0,
                         ),
                         IconButton(
-                          onPressed:
-                              () => context.read<TetrisCubit>().moveRight(),
+                          onPressed: () {
+                            context.read<TetrisCubit>().holdTimer?.cancel();
+                            context.read<TetrisCubit>().moveRight();
+                          },
                           icon: const Icon(
                             Icons.arrow_right,
                             color: Colors.white,
@@ -231,9 +235,10 @@ class TetrisGame extends StatelessWidget {
                           iconSize: 36.0,
                         ),
                         IconButton(
-                          onPressed:
-                              () =>
-                                  context.read<TetrisCubit>().rotateTetromino(),
+                          onPressed: () {
+                            context.read<TetrisCubit>().holdTimer?.cancel();
+                            context.read<TetrisCubit>().rotateTetromino();
+                          },
                           icon: const Icon(
                             Icons.rotate_right,
                             color: Colors.white,
@@ -250,7 +255,6 @@ class TetrisGame extends StatelessWidget {
                           },
                           onTapUp: (_) {
                             context.read<TetrisCubit>().holdTimer?.cancel();
-                            context.read<TetrisCubit>().stopMovingDown();
                           },
                           child: const Icon(
                             Icons.arrow_downward,
