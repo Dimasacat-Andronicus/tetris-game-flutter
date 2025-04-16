@@ -4,6 +4,9 @@
 
 ### Explore the Android app on:
 [![Android App](https://img.shields.io/badge/Android%20App-Visit-%236A0DAD?style=for-the-badge&logo=android)](https://drive.google.com/drive/folders/15CY0_Mf45pE1HEQ71FXUS8QyZdnq3fp3) 
+
+[![Flutter](https://img.shields.io/badge/Flutter-%2302569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)
+[![Dart](https://img.shields.io/badge/Dart-%230175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev/)
 </div>
 
 ## About
