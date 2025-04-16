@@ -31,7 +31,7 @@ class TetrisApp extends StatelessWidget {
             Positioned.fill(
               child: Image.asset('assets/tetris_bg.png', fit: BoxFit.cover),
             ),
-            const TetrisGame(),
+            TetrisGame(),
           ],
         ),
       ),
