@@ -9,7 +9,7 @@
 ## About
 ##### A Tetris game build on Flutter and Dart language.
 ##### This app was made using BLoC state management.
-##### Dependencies: FLutter_bloc, shared_preferences, and lottie.
+##### Dependencies: flutter_bloc, shared_preferences, lottie, flutter_confetti, and confetti.
 -------------------------
 ## Features
 ##### Can see the next block to be deployed on the grid.
