@@ -46,13 +46,13 @@ class TetrisCubit extends Cubit<TetrisState> {
   ];
 
   final tetrominoColors = [
-    Colors.teal[300]!,
-    Colors.amber[300]!,
-    Colors.green[300]!,
-    Colors.cyan[300]!,
-    Colors.pink[300]!,
-    Colors.lime[300]!,
-    Colors.orange[300]!,
+    Colors.teal[600]!,
+    Colors.amber[700]!,
+    Colors.green[600]!,
+    Colors.cyan[700]!,
+    Colors.pink[600]!,
+    Colors.lime[700]!,
+    Colors.orange[700]!,
   ];
 
   TetrisCubit()
@@ -146,6 +146,10 @@ class TetrisCubit extends Cubit<TetrisState> {
       lockPiece();
     }
 
+    isMovingDown = false;
+  }
+
+  void stopMovingDown() {
     isMovingDown = false;
   }
 

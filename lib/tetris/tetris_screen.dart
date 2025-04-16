@@ -11,8 +11,9 @@ class TetrisGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         leading: BlocBuilder<TetrisCubit, TetrisState>(
           builder: (context, state) {
             if (state.isGameStarted && !state.isGameOver) {
@@ -73,8 +74,8 @@ class TetrisGame extends StatelessWidget {
                     children: [
                       Image.asset(
                         'assets/tetris_plus.png',
-                        width: 175,
-                        height: 175,
+                        width: 210,
+                        height: 100,
                         fit: BoxFit.cover,
                       ),
                       Lottie.asset(
@@ -176,8 +177,11 @@ class TetrisGame extends StatelessWidget {
                                   color = state.currentColor;
                                 }
                                 return Container(
-                                  margin: const EdgeInsets.all(1),
-                                  color: color ?? Colors.deepPurple[200],
+                                  margin: const EdgeInsets.all(2),
+                                  decoration: BoxDecoration(
+                                      color: color ?? const Color.fromARGB(200, 255, 255, 255),
+                                      border: Border.all(color: const Color.fromARGB(128, 255, 255, 255)),
+                                  ),
                                 );
                               },
                             );
@@ -237,21 +241,17 @@ class TetrisGame extends StatelessWidget {
                           iconSize: 36.0,
                         ),
                         GestureDetector(
-                          onTapDown:
-                              (_) =>
-                                  context
-                                      .read<TetrisCubit>()
-                                      .holdTimer = Timer.periodic(
-                                    const Duration(milliseconds: 100),
-                                    (_) =>
-                                        context.read<TetrisCubit>().moveDown(),
-                                  ),
-                          onTapUp:
-                              (_) =>
-                                  context
-                                      .read<TetrisCubit>()
-                                      .holdTimer
-                                      ?.cancel(),
+                          onTapDown: (_) {
+                            context.read<TetrisCubit>().holdTimer?.cancel();
+                            context.read<TetrisCubit>().holdTimer = Timer.periodic(
+                              const Duration(milliseconds: 100),
+                                  (_) => context.read<TetrisCubit>().moveDown(),
+                            );
+                          },
+                          onTapUp: (_) {
+                            context.read<TetrisCubit>().holdTimer?.cancel();
+                            context.read<TetrisCubit>().stopMovingDown();
+                          },
                           child: const Icon(
                             Icons.arrow_downward,
                             size: 36.0,
