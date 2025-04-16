@@ -313,13 +313,28 @@ class TetrisGame extends StatelessWidget {
                         shouldLoop: false,
                       ),
                       Center(
-                        child: Text(
-                          'Animation',
-                          style: TextStyle(
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                        child: Stack(
+                          children: [
+                            Text(
+                              'Awesome',
+                              style: TextStyle(
+                                fontSize: 54,
+                                fontWeight: FontWeight.bold,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 8
+                                  ..color = Colors.indigo,
+                              ),
+                            ),
+                            Text(
+                              'Awesome',
+                              style: TextStyle(
+                                fontSize: 54,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purpleAccent,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
