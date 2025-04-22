@@ -13,6 +13,7 @@ class TetrisState {
   final List<List<int>>? nextTetromino;
   final Color? nextColor;
   final bool showAnimation;
+  final bool isMusicPlaying;
 
   TetrisState({
     required this.grid,
@@ -27,6 +28,7 @@ class TetrisState {
     this.nextTetromino,
     this.nextColor,
     required this.showAnimation,
+    required this.isMusicPlaying,
   });
 
   TetrisState copyWith({
@@ -42,6 +44,7 @@ class TetrisState {
     List<List<int>>? nextTetromino,
     Color? nextColor,
     bool? showAnimation,
+    bool? isMusicPlaying,
   }) {
     return TetrisState(
       grid: grid ?? this.grid,
@@ -56,6 +59,7 @@ class TetrisState {
       nextTetromino: nextTetromino ?? this.nextTetromino,
       nextColor: nextColor ?? this.nextColor,
       showAnimation: showAnimation ?? this.showAnimation,
+      isMusicPlaying: isMusicPlaying ?? this.isMusicPlaying,
     );
   }
 }
