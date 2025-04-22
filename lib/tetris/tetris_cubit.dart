@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import '../main.dart';
 
@@ -11,6 +12,7 @@ class TetrisCubit extends Cubit<TetrisState> {
   static const int rows = 20;
   static const int columns = 10;
   bool isMovingDown = false;
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   Timer? gameTimer;
   Timer? holdTimer;
@@ -68,8 +70,10 @@ class TetrisCubit extends Cubit<TetrisState> {
           isGameStarted: false,
           currentColor: Colors.blue,
           showAnimation: false,
+          isMusicPlaying: true,
         ),
       ) {
+    _playMusic();
     _loadHighScore();
   }
 
@@ -324,8 +328,29 @@ class TetrisCubit extends Cubit<TetrisState> {
     });
   }
 
+  void toggleMusic() async {
+    if (state.isMusicPlaying) {
+      await _pauseMusic(); // Use the _pauseMusic method here
+    } else {
+      await _audioPlayer.resume();
+      emit(state.copyWith(isMusicPlaying: true));
+    }
+  }
+
+  Future<void> _playMusic() async {
+    await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+    await _audioPlayer.play(AssetSource('tetris_mobile.wav'));
+    emit(state.copyWith(isMusicPlaying: true));
+  }
+
+  Future<void> _pauseMusic() async {
+    await _audioPlayer.pause();
+    emit(state.copyWith(isMusicPlaying: false));
+  }
+
   @override
   Future<void> close() {
+    _audioPlayer.dispose();
     gameTimer?.cancel();
     holdTimer?.cancel();
     return super.close();
