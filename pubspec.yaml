@@ -39,6 +39,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_confetti: 0.5.1
   confetti: ^0.7.0
+  audioplayers: ^6.4.0
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
     - assets/tetris_animation_two.json
     - assets/tetris_plus.png
     - assets/tetris_bg.png
+    - assets/tetris_mobile.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
