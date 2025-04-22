@@ -7,17 +7,24 @@ import './tetris_cubit.dart';
 
 class TetrisGame extends StatelessWidget {
   final GlobalKey downButtonKey = GlobalKey();
+
   TetrisGame({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: (details) {
-        final renderBox = downButtonKey.currentContext?.findRenderObject() as RenderBox?;
+        final renderBox =
+            downButtonKey.currentContext?.findRenderObject() as RenderBox?;
         if (renderBox != null) {
           final position = renderBox.localToGlobal(Offset.zero);
           final size = renderBox.size;
-          final rect = Rect.fromLTWH(position.dx, position.dy, size.width, size.height);
+          final rect = Rect.fromLTWH(
+            position.dx,
+            position.dy,
+            size.width,
+            size.height,
+          );
 
           if (!rect.contains(details.globalPosition)) {
             context.read<TetrisCubit>().cancelHoldTimer();
@@ -77,6 +84,38 @@ class TetrisGame extends StatelessWidget {
                 }
                 return const SizedBox.shrink();
               },
+            ),
+            IconButton(
+              onPressed: () {
+                context.read<TetrisCubit>().toggleMusic();
+              },
+              icon: BlocBuilder<TetrisCubit, TetrisState>(
+                builder: (context, state) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.purple, Colors.blue],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(77, 0, 0, 0),
+                          blurRadius: 4,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      state.isMusicPlaying ? Icons.volume_up : Icons.volume_off,
+                      color: Colors.white,
+                      size: 28.0,
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -175,7 +214,8 @@ class TetrisGame extends StatelessWidget {
                                           constraints.maxWidth /
                                           (cellSize * TetrisCubit.columns),
                                     ),
-                                itemCount: TetrisCubit.rows * TetrisCubit.columns,
+                                itemCount:
+                                    TetrisCubit.rows * TetrisCubit.columns,
                                 itemBuilder: (context, index) {
                                   int row = index ~/ TetrisCubit.columns;
                                   int column = index % TetrisCubit.columns;
@@ -187,7 +227,9 @@ class TetrisGame extends StatelessWidget {
                                       column >= state.currentColumn &&
                                       column <
                                           state.currentColumn +
-                                              state.currentTetromino[0].length &&
+                                              state
+                                                  .currentTetromino[0]
+                                                  .length &&
                                       state.currentTetromino[row -
                                               state.currentRow][column -
                                               state.currentColumn] ==
@@ -278,9 +320,11 @@ class TetrisGame extends StatelessWidget {
                             key: downButtonKey,
                             onTapDown: (_) {
                               context.read<TetrisCubit>().cancelHoldTimer();
-                              context.read<TetrisCubit>().holdTimer = Timer.periodic(
+                              context
+                                  .read<TetrisCubit>()
+                                  .holdTimer = Timer.periodic(
                                 const Duration(milliseconds: 100),
-                                    (_) => context.read<TetrisCubit>().moveDown(),
+                                (_) => context.read<TetrisCubit>().moveDown(),
                               );
                             },
                             onTapUp: (_) {
@@ -320,10 +364,11 @@ class TetrisGame extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 54,
                                 fontWeight: FontWeight.bold,
-                                foreground: Paint()
-                                  ..style = PaintingStyle.stroke
-                                  ..strokeWidth = 8
-                                  ..color = Colors.indigo,
+                                foreground:
+                                    Paint()
+                                      ..style = PaintingStyle.stroke
+                                      ..strokeWidth = 8
+                                      ..color = Colors.indigo,
                               ),
                             ),
                             Text(
